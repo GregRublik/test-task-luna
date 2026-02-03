@@ -47,8 +47,8 @@ class OrganizationResponse(BaseModel):
 
 # Специальные схемы для запросов
 class CoordinateRequest(BaseModel):
-    latitude: float
-    longitude: float
+    latitude: float = Field(..., ge=-90, le=90, description="Широта центра поиска"),
+    longitude: float = Field(..., ge=-180, le=180, description="Долгота центра поиска"),
 
 
 class RadiusSearchRequest(CoordinateRequest):

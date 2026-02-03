@@ -6,7 +6,7 @@ from repositories.organization import OrganizationRepository
 from repositories.activity import ActivityRepository
 from services.unit_of_work import UnitOfWork
 
-from schemas.organization import OrganizationFilter
+from schemas.organization import OrganizationFilter, RadiusSearchRequest, RectangleSearchRequest
 
 
 class OrganizationService:
@@ -80,28 +80,23 @@ class OrganizationService:
 
     async def get_organizations_within_radius(
         self,
-        latitude: float,
-        longitude: float,
-        radius_km: float,
+        coordinates: RadiusSearchRequest
     ):
         return await self.repository.find_within_radius(
             self.uow.session,
-            latitude,
-            longitude,
-            radius_km,
+            coordinates.latitude,
+            coordinates.longitude,
+            coordinates.radius_km,
         )
 
     async def get_organizations_within_rectangle(
         self,
-        min_lat: float,
-        max_lat: float,
-        min_lon: float,
-        max_lon: float,
+        rectangle: RectangleSearchRequest
     ):
         return await self.repository.find_within_rectangle(
             self.uow.session,
-            min_lat,
-            max_lat,
-            min_lon,
-            max_lon,
+            rectangle.min_lat,
+            rectangle.max_lat,
+            rectangle.min_lon,
+            rectangle.max_lon,
         )
